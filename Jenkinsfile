@@ -37,7 +37,7 @@ pipeline {
                 sh '''
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
-                    echo 'deploying to ${env.NETLIFY_SITE_ID}'
+                    echo "deploying to $NETLIFY_SITE_ID"
                 '''
             }
         }
