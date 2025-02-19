@@ -45,21 +45,5 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            agent {
-                docker {
-                    image 'my-playwright'
-                    reuseNode true
-                }
-            }
-            steps {
-                sh '''
-                    netlify --version
-                    echo "deploying to $NETLIFY_SITE_ID"
-                    netlify status
-                    netlify deploy --dir=build --prod
-                '''
-            }
-        }
     }
 }
