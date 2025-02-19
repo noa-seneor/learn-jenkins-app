@@ -19,7 +19,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'aws-key', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                 sh '''
                     aws --version
-                    eco "helloo s3" > index.html
+                    echo "helloo s3" > index.html
                     aws s3 cp index.html s3://learn-jenkins-230284529/index.html
                 '''
 }
