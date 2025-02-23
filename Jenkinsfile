@@ -5,6 +5,7 @@ pipeline {
         AWS_DEFAULT_REGION = 'eu-west-1'
         REACT_APP_VERSION = "1.0.$BUILD_ID"
         APP_NAME = 'learnjenkinsapp'
+        AWS_DOCKER_REGISTRY = '011528270432.dkr.ecr.eu-west-1.amazonaws.com'
     }
 
     stages {
@@ -29,7 +30,7 @@ pipeline {
 
         stage('build docker image') {
             steps {
-                sh 'docker build -t $APP_NAME:$REACT_APP_VERSION .'
+                sh 'docker build -t $AWS_DOCKER_REGISTRY/$APP_NAME:$REACT_APP_VERSION .'
             }
         }
 
