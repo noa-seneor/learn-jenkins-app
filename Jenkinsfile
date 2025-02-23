@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-       AWS_DEFAULT_REGION = 'eu-west-1'
-
+        AWS_DEFAULT_REGION = 'eu-west-1'
+        REACT_APP_VERSION = "1.0.$BUILD_ID"
+        APP_NAME = 'learnjenkinsapp'
     }
 
     stages {
@@ -28,7 +29,7 @@ pipeline {
 
         stage('build docker image') {
             steps {
-                sh 'docker build -t my-jenkins-app .'
+                sh 'docker build -t $APP_NAME:$REACT_APP_VERSION .'
             }
         }
 
