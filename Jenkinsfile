@@ -3,15 +3,11 @@ pipeline {
 
     environment {
        AWS_DEFAULT_REGION = 'eu-west-1'
-       AWS_ECS_CLUSTER = 'learn-jenkins-app-cluster-prod'
-       AWS_ECS_SERVICE_PROD = 'LearnJenkinsApp-Service-Prod'
-       AWS_ECS_TD_PROD = 'Learning-Jenkins-TaskDefinition-Prod'
 
     }
 
     stages {
-
-        stage('Build') {
+  stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -35,6 +31,7 @@ pipeline {
                 sh 'docker build -t my-jenkins-app .'
             }
         }
+
         stage('Deploy to AWS') {
             agent {
                 docker {
@@ -54,12 +51,11 @@ pipeline {
                     yum install jq -y
                     LATEST_TD_REVISION=$(aws ecs register-task-definition --cli-input-json file://aws-task-definition.json | jq '.taskDefinition.revision')
                     echo "Latest Task Definition Revision: $LATEST_TD_REVISION"
-                    aws ecs update-service --cluster $AWS_ECS_CLUSTER --service $AWS_ECS_SERVICE_PROD --task-definition $AWS_ECS_TD_PROD:$LATEST_TD_REVISION
-                    aws ecs wait seek-service-stable --cluster $AWS_ECS_CLUSTER --service $AWS_ECS_SERVICE_PROD
+                    aws ecs update-service --cluster learn-jenkins-app-cluster-prod --service LearnJenkinsApp-Service-Prod --task-definition Learning-Jenkins-TaskDefinition-Prod:$LATEST_TD_REVISION
+                    aws ecs wait seek-service-stable --cluster learn-jenkins-app-cluster-prod --service LearnJenkinsApp-Service-Prod
                 '''
                 }
             }
         }
-
     }
 }
