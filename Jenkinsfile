@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NETLIFY_SITE_ID = '32c2f0f3-794e-4f9b-abee-17c0adaa459b'
-        NETLIFY_AUTH_TOKEN = credentials('netlify-token')
+       AWS_DEFAULT_REGION = 'eu-west-1'
     }
 
     stages {
